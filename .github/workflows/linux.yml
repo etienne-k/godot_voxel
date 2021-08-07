@@ -71,11 +71,22 @@ jobs:
           scons --version
 
       # We should always be explicit with our flags usage here since it's gonna be sure to always set those flags
-      - name: Compilation
+      - name: Template compilation
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
           scons -j2 verbose=no warnings=all platform=linuxbsd tools=no tests=no target=release_debug # werror=yes production=yes
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: godot.x11.opt.debug.64
+          path: bin/godot.x11.opt.debug.64
+
+      - name: Template compilation
+        env:
+          SCONS_CACHE: ${{github.workspace}}/.scons_cache/
+        run: |
+          scons -j2 verbose=no warnings=all platform=linuxbsd tools=yes tests=no target=release_debug # werror=yes production=yes
 
       # TODO Such tests are able to run from Godot 4.0 only
       # Execute unit tests for the editor
@@ -88,4 +99,3 @@ jobs:
         with:
           name: godot.x11.opt.tools.64
           path: bin/godot.x11.opt.tools.64
-
