@@ -1,6 +1,6 @@
 name: 🐧 Linux Builds
 on:
-  workflow-dispatch:
+  workflow_dispatch:
   push:
     branches: [ master, github_actions ]
   pull_request:
